@@ -4,7 +4,7 @@ require 'httparty'
 # https://maps.googleapis.com/maps/api/geocode/json?address=Great Pyramid of Giza&key=AIzaSyBP30mYnbwKpZ0lCHtp6FuvcNSjNG0GsGM
 
 
-seven_wonders = ["Great Pyramid of Giza", "Hanging Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
+seven_wonders = ["Great Pyramid of Giza", "Hanging Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus", ""]
 
 puts "Welcome to Seven Wonders of the World"
 
@@ -22,9 +22,9 @@ seven_wonders.each do |wonder|
 
   if response.code == 200 && response['status'] == "OK"
     gps_hash["#{wonder}"] = response['results'][0]["geometry"]["location"]
-    
+
   else
-    puts "This didn't work"
+    gps_hash["#{wonder}"] = {"status" => response['status'], "error_message" => response['error_message']}
   end
 
 end
