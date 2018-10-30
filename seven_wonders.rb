@@ -8,20 +8,23 @@ seven_wonders = ["Great Pyramid of Giza", "Hanging Gardens of Babylon", "Colossu
 
 puts "Welcome to Seven Wonders of the World"
 
-wonder = seven_wonders[0]
-google_api_key = "AIzaSyBP30mYnbwKpZ0lCHtp6FuvcNSjNG0GsGM"
-geocode_url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{wonder}&key=#{google_api_key}"
-encoded_url = URI.encode(geocode_url)
+seven_wonders.each do |wonder|
 
-response = HTTParty.get(encoded_url)
+# wonder = seven_wonders[0]
+  google_api_key = "AIzaSyBP30mYnbwKpZ0lCHtp6FuvcNSjNG0GsGM"
+  geocode_url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{wonder}&key=#{google_api_key}"
+  encoded_url = URI.encode(geocode_url)
+  response = HTTParty.get(encoded_url)
 
-if response.code == 200
-  puts "Your info for #{wonder}: #{response['results']}"
+
+
+if response.code == 200 && response['status'] == "OK"
+  puts "Your info for #{wonder}: #{response['results'][0]["geometry"]["location"]}"
 else
   puts "This didn't work"
 end
 
-
+end
 
 
 
