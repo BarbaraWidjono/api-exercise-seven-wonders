@@ -1,9 +1,25 @@
 require 'httparty'
 
+# Using Googles Geocoding API web service
+# https://maps.googleapis.com/maps/api/geocode/json?address=Great Pyramid of Giza&key=AIzaSyBP30mYnbwKpZ0lCHtp6FuvcNSjNG0GsGM
+
 #Starter Code:
 seven_wonders = ["Great Pyramid of Giza", "Hanging Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
 
+puts "Welcome to Seven Wonders of the World"
 
+wonder = seven_wonders[0]
+google_api_key = "AIzaSyBP30mYnbwKpZ0lCHtp6FuvcNSjNG0GsGM"
+geocode_url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{wonder}&key=#{google_api_key}"
+encoded_url = URI.encode(geocode_url)
+
+response = HTTParty.get(encoded_url)
+
+if response.code == 200
+  puts "Your info for #{wonder}: #{response['results']}"
+else
+  puts "This didn't work"
+end
 
 
 
